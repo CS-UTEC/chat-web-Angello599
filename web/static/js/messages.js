@@ -1,13 +1,13 @@
-$(function(){
-    var url = '/messages'
-    var u = '/users'
+function getMessagesDevEx(){
+    var url = "/messages";
+    var u = "/users";
     $("#grid").dxDataGrid({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "id",
-            loadUrl: url,
             insertUrl: url,
             updateUrl: url,
             deleteUrl: url,
+            loadUrl: url,
             onBeforeSend: function(method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }
@@ -37,7 +37,8 @@ $(function(){
             dataField: "content"
         }, {
             dataField: "sent_on",
-            dataType: "date"
+            dataType: "date",
+            format: "MM/dd/yyy hh:mm"
         }, {
             dataField: "user_from_id",
             lookup:{
@@ -72,4 +73,4 @@ $(function(){
             }
         }, ],
     }).dxDataGrid("instance");
-});
+}

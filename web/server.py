@@ -1,6 +1,7 @@
 from flask import Flask,render_template, request, session, Response, redirect
 from database import connector
 from model import entities
+from datetime import datetime, date
 import json
 import time
 
@@ -108,7 +109,7 @@ def create_message():
     c = json.loads(request.form['values'])
     message = entities.Message(
         content=c['content'],
-        sent_on=c['sent_on'],
+        sent_on=datetime.now(),
         user_from_id=c['user_from_id'],
         user_to_id=c['user_to_id']
     )
@@ -153,7 +154,7 @@ def update_message():
 def delete_message():
     id = request.form['key']
     session = db.getSession(engine)
-    user = session.query(entities.Message).filter(entities.Message.id == id).one()
+    message = session.query(entities.Message).filter(entities.Message.id == id).one()
     session.delete(message)
     session.commit()
     return "Deleted Message"
